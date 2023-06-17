@@ -1,9 +1,9 @@
 import openai
+import dotenv
+import os
 
-with open('API_KEY.txt', 'r') as file:
-    API_KEY = file.read().rstrip()
-
-openai.api_key = API_KEY
+dotenv.load_dotenv()
+openai.api_key = os.environ.get("API_KEY")
 
 output = openai.ChatCompletion.create(
   model="gpt-3.5-turbo",

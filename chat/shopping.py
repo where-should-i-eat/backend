@@ -1,10 +1,11 @@
 import openai
 import re
+import dotenv
+import os
 
-with open('API_KEY.txt', 'r') as file:
-    API_KEY = file.read().rstrip()
+dotenv.load_dotenv()
 
-openai.api_key = API_KEY
+openai.api_key = os.environ.get("API_KEY")
 
 def shopping_assistant(model="gpt-3.5-turbo", max_tokens=100):
     done = False
@@ -46,5 +47,5 @@ def extract_tags(messages_history, model="gpt-3.5-turbo", max_tokens=100):
     tags = re.findall(pattern, output_text)
     return tags
 
-tags = shopping_assistant()
-print(tags)
+# tags = shopping_assistant()
+# print(tags)

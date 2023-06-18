@@ -4,7 +4,7 @@ import os
 
 import re
 # from chat.chatbot import chatbot
-from connect_gmap import get_restaurant_recommendations, add_to_coordinate, get_placeid, get_restaurant_photos
+from connect_gmap import get_restaurant_recommendations, add_to_coordinate
 from typing import List, Dict
 
 dotenv.load_dotenv()
@@ -22,10 +22,8 @@ def extract_coordinate(recom, text):
     matches = re.findall(name_pattern, text)
     for match in matches:
         names.append(match)
-    # return [[add_to_coordinate(a), a, get_restaurant_photos(get_placeid(add_to_coordinate(a)))] for a in addresses]
-    # # return [[add_to_coordinate(a), a, get_name(add_to_coordinate(a))] for a in addresses]
 
-    return [[add_to_coordinate(addresses[idx]), addresses[idx], names[idx], recom[names[idx]]['photos']] for idx in list(range(min(len(names), len(addresses))))]
+    return [[names[idx], addresses[idx], add_to_coordinate(addresses[idx].strip()), recom[names[idx]]['photos']] for idx in list(range(min(len(names), len(addresses))))]
 
 def extract_text_between_at_signs(text):
     pattern = r'@([^@]+)@'
@@ -37,7 +35,7 @@ def get_top5(messages_history, recom, model="gpt-3.5-turbo", max_tokens=100):
     modified_recs = [recom[r]['name'] + "/" + f"rating: {recom[r]['rating']}" + "/" + f"distance: {recom[r]['distance']}" for r in recom.keys()]
     findmsg = f"Give me top 3 choices from this list of choices: {modified_recs}. Give me the name of the restaurant (enclosed in @ symbols) and the address"
     name_address = [recom[r]['name'] + ":" + recom[r]['address'] for r in recom]
-    addressmsg = f"Tell me the exact address of the restaurant you just chose from this list {name_address}"
+    addressmsg = f"Tell me the exact address of the restaurant you just chose from this list {name_address} and their names correspondingly"
 
     messages_history += [{"role": "user", "content": findmsg}]
 
@@ -52,7 +50,6 @@ def get_top5(messages_history, recom, model="gpt-3.5-turbo", max_tokens=100):
 
     output_text2 = output['choices'][0]['message']['content']
     messages_history += [{"role": "assistant", "content": output_text2}]
-    # print("coordinates:", extract_coordinate(output_text2))
     messages_history.pop(-2)
     messages_history.pop(-3)
     messages_history.pop(-4)
@@ -66,7 +63,6 @@ def chatbot(messages_history: List[Dict[str, str]], model="gpt-3.5-turbo", max_t
         "content": "You are a helpful assistant designed to help me choose a restaurant. You should ask a series of questions to learn my preferences so that you can suggest a tailored food place recommendation based on my preferences. Go ahead and introduce yourself as a helpful AI assistant designed to help me choose a restaurant and get started with asking the first question to determine my preferences.",
     }
 
-    # print(messages_history)
     
     messages_history.insert(0, initial_message)
 
@@ -88,7 +84,16 @@ mes_hist = chatbot(mes_hist)
 reco = get_restaurant_recommendations("meat food", (-122.257740, 37.868710))
 
 output_text = get_top5(mes_hist, reco)
-print(output_text)
+# print(output_text)
 
-# def encode():
-    
+def converter():
+    text, output = get_top5(mes_hist, reco)
+    ret = []
+    for i in range(3):
+        ret.append({"role": "name", "content": output[i][0]})
+        ret.append({"role": "address", "content": output[i][1]})
+        ret.append({"role": "coordinate", "content": output[i][2]})
+        ret.append({"role": "url", "content": output[i][3]})
+    return ret
+
+print(converter())

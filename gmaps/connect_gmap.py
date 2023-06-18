@@ -170,9 +170,3 @@ def get_placeid(coord):
     placeid = data1['results'][0]['place_id']
     
     return placeid
-
-
-
-# lat_lng = (37.8719, -122.2585)
-# query = "find me some chinese place near campus"
-# get_restaurant_recommendations(query, lat_lng)

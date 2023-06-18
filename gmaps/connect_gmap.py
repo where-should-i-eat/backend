@@ -12,9 +12,9 @@ GMAPS_API_KEY = os.environ.get("GMAPS_API_KEY")
 gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 
 
-def get_restaurant_recommendations(query):
+def get_restaurant_recommendations(query, longitude, latitude):
     try:
-        restaurants = gmaps.places(query=query, type='restaurant', min_price=1, max_price=4, open_now=True)
+        restaurants = gmaps.places(query=query, location = (longitude, latitude), type='restaurant', min_price=1, max_price=4, open_now=True)
         
         recommendations = []
         
@@ -63,6 +63,8 @@ def get_restaurant_reviews(place_id):
     url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews&key={GMAPS_API_KEY}"
     response = requests.get(url)
 
+    user_review_texts = []
+
     if response.status_code == 200:
         result = response.json()
         restaurant_name = result["result"]["name"]
@@ -72,18 +74,20 @@ def get_restaurant_reviews(place_id):
             author_name = review["author_name"]
             rating = review["rating"]
             review_text = review["text"]
-    else:
-        print("Failed to fetch reviews")
+            user_review_texts.append(review_text)
+
+    return user_review_texts
 
 def get_restaurant_photos(place_id):
     place_details = gmaps.place(place_id=place_id, fields=['photo'])
+
+    photo_urls = []
 
     if 'result' in place_details:
         result = place_details['result']
         if 'photos' in result:
                 photo_references = [photo['photo_reference'] for photo in result['photos']]
 
-                photo_urls = []
                 
                 # Use the photo references to retrieve the actual photos
                 for reference in photo_references:
@@ -96,4 +100,8 @@ def get_restaurant_photos(place_id):
 
     return photo_urls
 
-get_restaurant_recommendations(query)
+
+# def 
+
+
+# print(get_restaurant_recommendations(query, 112, 33))

@@ -3,17 +3,13 @@ aiosignal==1.3.1
 ansicon==1.89.0
 anyio==3.6.2
 appdirs==1.4.4
-appnope @ file:///home/conda/feedstock_root/build_artifacts/appnope_1649077682618/work
 argon2-cffi==21.3.0
 argon2-cffi-bindings==21.2.0
-asttokens @ file:///home/conda/feedstock_root/build_artifacts/asttokens_1670263926556/work
 async-timeout==4.0.2
 attrs==22.2.0
 Authlib==1.2.0
 Babel==2.11.0
-backcall @ file:///home/conda/feedstock_root/build_artifacts/backcall_1592338393461/work
 backoff==2.2.1
-backports.functools-lru-cache @ file:///home/conda/feedstock_root/build_artifacts/backports.functools_lru_cache_1618230623929/work
 beautifulsoup4==4.10.0
 bleach==6.0.0
 blessed==1.19.1
@@ -28,10 +24,7 @@ click==8.1.3
 colabcode==0.3.0
 colorama==0.4.4
 coloredlogs==15.0.1
-comm @ file:///home/conda/feedstock_root/build_artifacts/comm_1670575068857/work
 conda==23.1.0
-conda-content-trust @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_11146a2b-93c2-444c-a378-ad4fac363e991s0r1hnp/croots/recipe/conda-content-trust_1658126383571/work
-conda-package-handling @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_978q9xpmci/croot/conda-package-handling_1666940386714/work
 contourpy==1.0.7
 courlan==0.9.0
 cramjam==2.6.2
@@ -40,7 +33,6 @@ cssselect==1.1.0
 cycler==0.11.0
 dataclasses==0.6
 dateparser==1.1.7
-debugpy @ file:///Users/ktietz/ci_310/debugpy_1643965577625/work
 decorator==4.4.2
 deep-translator==1.10.1
 defusedxml==0.7.1
@@ -48,9 +40,7 @@ dill==0.3.6
 dl-translate==0.2.6
 dnspython==2.3.0
 EbookLib==0.18
-entrypoints @ file:///home/conda/feedstock_root/build_artifacts/entrypoints_1643888246732/work
 eta==0.9.7
-executing @ file:///home/conda/feedstock_root/build_artifacts/executing_1667317341051/work
 fake-headers==1.0.2
 fake-useragent==0.1.11
 fastjsonschema==2.16.2
@@ -59,7 +49,6 @@ featureform==1.9.3
 filelock==3.9.1
 Flask==2.0.1
 Flask-Cors==3.0.10
-flit_core @ file:///opt/conda/conda-bld/flit-core_1644941570762/work/source/flit_core
 fonttools==4.38.0
 frozenlist==1.3.3
 fsspec==2023.6.0
@@ -90,11 +79,8 @@ imageio-ffmpeg==0.4.8
 img2pdf==0.4.3
 importlib-metadata==4.11.3
 importlib-resources==5.4.0
-ipykernel @ file:///Users/runner/miniforge3/conda-bld/ipykernel_1673894854828/work
-ipython @ file:///Users/runner/miniforge3/conda-bld/ipython_1672758654845/work
 ipython-genutils==0.2.0
 itsdangerous==2.1.2
-jedi @ file:///home/conda/feedstock_root/build_artifacts/jedi_1669134318875/work
 Jinja2==3.1.2
 jinxed==1.1.0
 joblib==1.2.0
@@ -115,7 +101,7 @@ lxml==4.9.2
 markdown-it-py==2.2.0
 MarkupSafe==2.1.2
 matplotlib==3.6.3
-matplotlib-inline @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-inline_1660814786464/work
+
 mdurl==0.1.2
 mistune==2.0.4
 moviepy==1.0.3
@@ -139,63 +125,59 @@ pandas==1.3.5
 pandasql==0.7.3
 pandocfilters==1.5.0
 parse==1.19.0
-parso @ file:///home/conda/feedstock_root/build_artifacts/parso_1638334955874/work
+
 pdfminer.six==20211012
-pexpect @ file:///home/conda/feedstock_root/build_artifacts/pexpect_1667297516076/work
-pickleshare @ file:///home/conda/feedstock_root/build_artifacts/pickleshare_1602536217715/work
+
+
 pikepdf==5.0.1
 Pillow==9.0.1
 pinecone-client==2.2.2
 platformdirs==2.6.2
-pluggy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_croot-w6jyveby/pluggy_1648109277227/work
+
 proglog==0.1.10
 prometheus-client==0.16.0
-prompt-toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolkit_1670414775770/work
+
 protobuf==4.22.1
-psutil @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_1310b568-21f4-4cb0-b0e3-2f3d31e39728k9coaga5/croots/recipe/psutil_1656431280844/work
-ptyprocess @ file:///home/conda/feedstock_root/build_artifacts/ptyprocess_1609419310487/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
-pure-eval @ file:///home/conda/feedstock_root/build_artifacts/pure_eval_1642875951954/work
+
+
+
 pyarrow==12.0.0
-pycosat @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_e9xhel3kyj/croot/pycosat_1666805516297/work
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+
 pycryptodomex==3.17
 pydub==0.25.1
 pyee==8.2.2
-Pygments @ file:///home/conda/feedstock_root/build_artifacts/pygments_1672682006896/work
+
 pyngrok==5.2.1
-pyOpenSSL @ file:///opt/conda/conda-bld/pyopenssl_1643788558760/work
+
 pyparsing==3.0.7
 pyppeteer==1.0.2
 pyquery==1.4.3
 pyreadline3==3.4.1
 pyrsistent==0.19.3
-PySocks @ file:///Users/ktietz/ci_310/pysocks_1643961536721/work
-python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1626286286081/work
+
+
 python-dotenv==1.0.0
 pytz==2022.7.1
 pytz-deprecation-shim==0.1.0.post0
 PyWavelets==1.3.0
 PyYAML==6.0
-pyzmq @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_8599562e-e9e5-443b-91db-7f7c0ba6aad3mrdoyvz4/croots/recipe/pyzmq_1657724196154/work
 regex==2022.10.31
 reportlab==3.6.8
 requests==2.28.2
 requests-html==0.10.0
 rfc3986==1.5.0
 rich==13.3.2
-ruamel.yaml @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_aeh5mqcw49/croot/ruamel.yaml_1666304555976/work
-ruamel.yaml.clib @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_f64xdg2rww/croot/ruamel.yaml.clib_1666302244208/work
 scikit-image==0.19.2
 scikit-learn==1.2.1
 scipy==1.8.0
 Send2Trash==1.8.0
 sentence-transformers==2.2.2
 sentencepiece==0.1.97
-six @ file:///tmp/build/80754af9/six_1644875935023/work
+
 sniffio==1.3.0
 soupsieve==2.3.1
 SQLAlchemy==1.4.48
-stack-data @ file:///home/conda/feedstock_root/build_artifacts/stack_data_1669632077133/work
+
 terminado==0.17.1
 threadpoolctl==3.1.0
 tifffile==2022.3.16
@@ -203,18 +185,14 @@ tiktoken==0.3.1
 tinycss2==1.2.1
 tld==0.13
 tokenizers==0.13.2
-toolz @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_362wyqvvgy/croot/toolz_1667464079070/work
 torch==1.13.1
 torchtext==0.14.1
 torchvision==0.14.1
-tornado @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_a61b4xoie9/croots/recipe/tornado_1662061692951/work
 tqdm==4.65.0
 trafilatura==1.4.1
-traitlets @ file:///home/conda/feedstock_root/build_artifacts/traitlets_1673359992537/work
 transformers==4.27.0
 translate==3.6.1
 typeguard==2.13.3
-typing_extensions @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_10a8_u2ijw/croot/typing_extensions_1669923788997/work
 tzdata==2022.7
 tzlocal==4.2
 urllib3==1.26.9

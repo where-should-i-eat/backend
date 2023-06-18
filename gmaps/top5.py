@@ -128,7 +128,7 @@ def converter(mes_hist, reco, user_location):
 
     ret.append({"role": "assistant-map", 
                     "content": {'center': user_location,
-                                'zoom': 17,
+                                'zoom': 13,
                                 'markers': [markers[i] for i in range(len(markers))]
                                 }
                     })

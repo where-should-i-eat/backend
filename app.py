@@ -15,6 +15,8 @@ def home():
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json
+    if "location" not in data.keys():
+        data['location'] = {'lat': 37.8693018, 'lng': -122.2599802}
     print(data['location'])
     location = data['location']
     messages_history = data['messages']

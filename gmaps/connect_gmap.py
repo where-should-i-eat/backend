@@ -23,8 +23,6 @@ gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 def get_restaurant_recommendations(query, lat_lng):
     try:
         restaurants = gmaps.places(query=query, location=lat_lng, type='restaurant', min_price=1, open_now=True)
-        
-        print("restaurant", restaurants)
 
         recommendations = {}
         
@@ -35,8 +33,10 @@ def get_restaurant_recommendations(query, lat_lng):
             website = restaurant.get('website', 'N/A')
             phone_number = restaurant.get('formatted_phone_number', 'N/A')
             place_id = restaurant['place_id']
+            url = f"https://www.google.com/maps/place/?q=place_id:{place_id}&key={GMAPS_API_KEY}"
             reviews = get_restaurant_reviews(place_id)
 
+            print("URL:", url)
             photos = get_restaurant_photos(place_id) # a list of url's
             coordinate = gmaps.geocode(address=address)[0]['geometry']['location']
             distancedic = gmaps.distance_matrix(coordinate, lat_lng, units='metric')
@@ -48,7 +48,7 @@ def get_restaurant_recommendations(query, lat_lng):
             if rating >= min_rating:
                 recommendations[place_id] = {'name': name, 'address': address, 'rating': rating, 
                                         'website': website, 'phone number': phone_number, 
-                                        'place_id': place_id, 'reviews': reviews[:3], 'photos': photos,
+                                        'place_id': place_id, 'url': url, 'reviews': reviews[:3], 'photos': photos,
                                         'coordinate': coordinate, 'distance': distance}
         
         return recommendations

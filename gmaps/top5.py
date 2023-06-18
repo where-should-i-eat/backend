@@ -35,7 +35,7 @@ def extract_coord(recom, text):
     ID = extract_placeid(text)
     print("total recommendation number:", len(ID))
     print("they are:", ID)
-    return [[recom[i]['name'], recom[i]['address'], add_to_coordinate(recom[i]['address']), recom[i]['photos'], recom[i]['reviews']] for i in ID]
+    return [[recom[i]['name'], recom[i]['address'], add_to_coordinate(recom[i]['address']), recom[i]['photos'], recom[i]['reviews'], recom[i]['url']] for i in ID]
 
 
 # def extract_text_between_at_signs(text):
@@ -57,7 +57,7 @@ def get_top5(messages_history, recom, model="gpt-3.5-turbo", max_tokens=300):
         messages=filter_text(messages_history),
         max_tokens=max_tokens
         )
-        
+
     output_text1 = output['choices'][0]['message']['content']
     messages_history += [{"role": "assistant", "content": output_text1}]
 
@@ -112,6 +112,7 @@ def converter(mes_hist, reco, user_location):
     ret = []
     for i in range(len(output)):
         ret.append({"role": "assistant", "content": output[i][0] + " (" + output[i][1] + ")"}) #name, address
+            
         if len(output[i][3]) == 0:
             continue
         elif len(output[i][3]) == 1:
@@ -123,7 +124,7 @@ def converter(mes_hist, reco, user_location):
     markers = {}
     markers[len(output)] = {'lat': user_location['lat'], 'lng': user_location['lng'], 'title': "Your Location"}
     for i in range(len(output)):
-        markers[i] = {'lat': output[i][2]['lat'], 'lng': output[i][2]['lng'], 'title': output[i][0]}
+        markers[i] = {'lat': output[i][2]['lat'], 'lng': output[i][2]['lng'], 'title': output[i][0], 'link': output[i][5]}
 
     ret.append({"role": "assistant-map", 
                     "content": {'center': user_location,

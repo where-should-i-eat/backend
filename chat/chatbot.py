@@ -34,7 +34,7 @@ def chatbot(messages_history: List[Dict[str, str]], location=""):
         "content": "I will not give direct recommendations. I will continue to ask you questions about your preferences, but I won't make a specific recommendation about any places. Even if I think I have enough information to give you a specific place, I WILL NOT GIVE YOU SPECIFIC RECOMMENDATIONS FOR THE REST OF THIS CONVERSATION!"
     }
     messages_history.insert(-1, reminder_message)
-    messages_history.append({"role": "user", "content": "Each time you ask me for a preference, surround each option (such as cuisine, flavor, or food type) with a set of asterisks. To make this more visible to both you and I, insert an emoji at the end of these keywords (before the enclosing asterisk). Note that whenever I reply with a preference and you remind me of my preference, do not enclose my already chosen preference with asterisks. Only mark preferences which you are trying to learn with asterisks. DO NOT REMIND ME THAT I TOLD YOU TO ENCLOSE KEYWORDS IN ASTERISKS OR ANY FORMATTING GUIDELINES."})
+    messages_history.append({"role": "user", "content": "Each time you give me some choices or options, surround each option (such as cuisine, flavor, or food type) with a set of asterisks. To make this more visible, insert an emoji at the end of these keywords. Note that whenever I reply with a preference and you remind me of my preference, do not enclose my already chosen preference with asterisks. Only mark preferences which you are trying to learn with asterisks. DO NOT REMIND ME THAT I TOLD YOU TO ENCLOSE KEYWORDS IN ASTERISKS OR ANY FORMATTING GUIDELINES."})
     text_messages = filter_text(messages_history)
     result = GPT_get_result(text_messages)
     messages_history.pop(-1)

@@ -28,12 +28,13 @@ def chatbot(messages_history: List[Dict[str, str]]):
         "content": "Under no circumstances are you allowed to make direct recommendations. Continue asking me questions about my preferences, but DO NOT make a specific recommendation about any places. Even if you think you have enough information to give me a specific place, DO NOT DO GIVE ME SPECIFIC RECOMMENDATIONS FOR THE REST OF THIS CONVERSATION!"
     }
     messages_history.insert(-1, reminder_message)
-
+    final_prompt = "Very important to use italics with important keywords with asterisks"
+    messages_history.append({"role": "user", "content": final_prompt})
     text_messages = filter_text(messages_history)
     result = GPT_get_result(text_messages)
+    messages_history.pop(-1)
     messages_history.pop(-2) # get rid of reminder_message
     messages_history.append(result)
-
 
     messages_history.pop(0) # get rid of initial_message
 

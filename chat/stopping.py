@@ -37,7 +37,7 @@ def end_conversation(messages_history, location="", model="gpt-4", max_tokens=10
     }
     messages_history.insert(1, location_message)
 
-    check_end_message = "If I were going to use the information you've given me about my preferences to query the GoogleMaps API, would I have given you enough information? The necessary information I would need before suggesting a restaurant are my LOCATION, FOOD PREFERENCE, PRICE RANGE, whether or not it is CASUAL/FANCY, and other crucial details. If you do not at least have my location, food preferences, how formal it should be, and my price range, never return TRUE Also, DO NOT RETURN TRUE if I have only given you one or two prompts. RETURN TRUE IF I HAVE GIVEN ENOUGH INFORMATION, OTHERWISE RETURN FALSE. SAY NOTHING ELSE. IF YOU SAY TRUE, THEN AFTER THE WORD TRUE, IN A NEWLINE, PROVIDE A SHORT QUERY TEXT (under 4 words preferably) TO BE INPUTTED FOR A SIMPLE GOOGLEMAPS SEARCH."
+    check_end_message = "If I were going to use the information you've given me about my preferences to query the GoogleMaps API, would I have given you enough information? The necessary information I would need before suggesting a restaurant are my LOCATION, FOOD PREFERENCE, PRICE RANGE, whether or not it is CASUAL/FANCY, other crucial details, etc. RETURN TRUE IF THERE IS ENOUGH INFORMATION. ALSO RETURN TRUE IF THERE ARE AT LEAST 3 USER MESSAGES. IF YOU SAY TRUE, THEN AFTER THE WORD TRUE, IN A NEWLINE, PROVIDE A SHORT QUERY TEXT (under 4 words preferably) TO BE INPUTTED FOR A SIMPLE GOOGLEMAPS SEARCH."
 
     messages_history.append({"role": "user", "content": check_end_message})
 

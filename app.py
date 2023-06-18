@@ -18,9 +18,15 @@ def chat():
     print(data['location'])
     location = data['location']
     messages_history = data['messages']
-    end, google_maps_query = end_conversation(messages_history, location)
-    if end:
+    cnt = 0
+    for message in messages_history:
+        if message["role"] == "user":
+            cnt += 1
+    if cnt >= 3:
+        end, google_maps_query = end_conversation(messages_history, location)
         print("google_maps_query", google_maps_query)
+    
+    if end:
         recommendations = get_restaurant_recommendations(google_maps_query, location) # is location the right format?
         print("recommendations", recommendations)
         top3 = converter(messages_history, recommendations, location)

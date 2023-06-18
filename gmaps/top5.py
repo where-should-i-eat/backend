@@ -50,7 +50,7 @@ def get_top5(messages_history, recom, model="gpt-3.5-turbo", max_tokens=300):
     findmsg = f"Choose AT MOST 3 best restaurants from the list provided and give me all of their 27-digit ID: {modified_recs}."
 
     messages_history += [{"role": "user", "content": findmsg}]
-    ridmsg = "Give me a list of the NAME of each of the restaurant in bullet points"
+    ridmsg = "Give me a list of the NAME of each of the restaurant (there should be only 3 names in this list) in bullet points"
 
     output = openai.ChatCompletion.create(
         model=model,
@@ -128,7 +128,7 @@ def converter(mes_hist, reco, user_location):
 
     ret.append({"role": "assistant-map", 
                     "content": {'center': user_location,
-                                'zoom': 12,
+                                'zoom': 20,
                                 'markers': [markers[i] for i in range(len(markers))]
                                 }
                     })

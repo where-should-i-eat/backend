@@ -7,7 +7,7 @@ from chat.utils import filter_text
 dotenv.load_dotenv()
 openai.api_key = os.environ.get("API_KEY")
 
-def GPT_get_result(text_messages: List[Dict[str, str]], model="gpt-3.5-turbo", max_tokens=100):
+def GPT_get_result(text_messages: List[Dict[str, str]], model="gpt-4", max_tokens=100):
     output = openai.ChatCompletion.create(
         model=model,
         messages=text_messages,
@@ -24,12 +24,11 @@ def chatbot(messages_history: List[Dict[str, str]]):
     messages_history.insert(0, initial_message)
 
     reminder_message = {
-        "role": "user",
-        "content": "Under no circumstances are you allowed to make direct recommendations. Continue asking me questions about my preferences, but DO NOT make a specific recommendation about any places. Even if you think you have enough information to give me a specific place, DO NOT DO GIVE ME SPECIFIC RECOMMENDATIONS FOR THE REST OF THIS CONVERSATION!"
+        "role": "assistant",
+        "content": "I will not give direct recommendations. I will continue to ask you questions about your preferences, but I won't make a specific recommendation about any places. Even if I think I have enough information to give you a specific place, I WILL NOT GIVE YOU SPECIFIC RECOMMENDATIONS FOR THE REST OF THIS CONVERSATION!"
     }
     messages_history.insert(-1, reminder_message)
-    final_prompt = "Very important to use italics with important keywords with asterisks"
-    messages_history.append({"role": "user", "content": final_prompt})
+    messages_history.append({"role": "user", "content": "Use asterisks to mark keywords and food preferences and cuisines and flavors and food types. To make this more visible to you and insert an emoji at the end of these keywords (before the enclosing asterisk)."})
     text_messages = filter_text(messages_history)
     result = GPT_get_result(text_messages)
     messages_history.pop(-1)

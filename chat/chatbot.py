@@ -25,7 +25,7 @@ def chatbot(messages_history: List[Dict[str, str]], location=""):
 
     location_message = {
         "role": "user",
-        "content": f"This is my coordinate: {location}. Use this to help recommend restaurants near me. DO NOT REMIND ME THAT I TOLD YOU THIS."
+        "content": f"These are coordinates of my current location: {location}. Use this to help recommend restaurants near me. DO NOT REMIND ME THAT I TOLD YOU THIS."
     }
     messages_history.insert(1, location_message)
 
@@ -34,7 +34,7 @@ def chatbot(messages_history: List[Dict[str, str]], location=""):
         "content": "I will not give direct recommendations. I will continue to ask you questions about your preferences, but I won't make a specific recommendation about any places. Even if I think I have enough information to give you a specific place, I WILL NOT GIVE YOU SPECIFIC RECOMMENDATIONS FOR THE REST OF THIS CONVERSATION!"
     }
     messages_history.insert(-1, reminder_message)
-    messages_history.append({"role": "user", "content": "Use asterisks to mark keywords and food preferences and cuisines and flavors and food types. To make this more visible to you and insert an emoji at the end of these keywords (before the enclosing asterisk)."})
+    messages_history.append({"role": "user", "content": "Each time you ask me for a preference, surround each option (such as cuisine, flavor, or food type) with a set of asterisks. To make this more visible to both you and I, insert an emoji at the end of these keywords (before the enclosing asterisk). Note that whenever I reply with a preference and you remind me of my preference, do not enclose my already chosen preference with asterisks. Only mark preferences which you are trying to learn with asterisks. DO NOT REMIND ME THAT I TOLD YOU TO ENCLOSE KEYWORDS IN ASTERISKS OR ANY FORMATTING GUIDELINES."})
     text_messages = filter_text(messages_history)
     result = GPT_get_result(text_messages)
     messages_history.pop(-1)

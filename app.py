@@ -20,8 +20,11 @@ def chat():
     messages_history = data['messages']
     end, google_maps_query = end_conversation(messages_history)
     if end:
+        print("google_maps_query", google_maps_query)
         recommendations = get_restaurant_recommendations(google_maps_query, location) # is location the right format?
+        print("recommendations", recommendations)
         top3 = converter(messages_history, recommendations, location)
+        print('top3', top3)
         # top3 will return a list of the chosen recommendations
         # append top3 to messages_history
         messages_history += top3

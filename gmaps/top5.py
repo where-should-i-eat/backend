@@ -4,8 +4,9 @@ import os
 
 import re
 # from chat.chatbot import chatbot
-from connect_gmap import get_restaurant_recommendations, add_to_coordinate
+from gmaps.connect_gmap import get_restaurant_recommendations, add_to_coordinate
 from typing import List, Dict
+from chat.utils import filter_text
 
 dotenv.load_dotenv()
 openai.api_key = os.environ.get("API_KEY")
@@ -46,13 +47,13 @@ def get_top5(messages_history, recom, model="gpt-3.5-turbo", max_tokens=300):
     # TODO reviews
     modified_recs = [recom[r]['name'] + " (" + f"rating: {recom[r]['rating']}" + ", " + f"distance: {recom[r]['distance']}" 
                      + ", " + f"ID: {r}" + ")" for r in recom.keys()]
-    findmsg = f"Choose at most 3 best restaurants from the list provided and give me all 4 of their 27-digit ID: {modified_recs}. Tell me in bullet points."
+    findmsg = f"Choose at most 3 best restaurants from the list provided and give me all of their 27-digit ID: {modified_recs}. Tell me in bullet points."
 
     messages_history += [{"role": "user", "content": findmsg}]
 
     output = openai.ChatCompletion.create(
         model=model,
-        messages=messages_history,
+        messages=filter_text(messages_history),
         max_tokens=max_tokens
         )
     output_text1 = output['choices'][0]['message']['content']

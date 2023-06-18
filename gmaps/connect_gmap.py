@@ -24,6 +24,8 @@ def get_restaurant_recommendations(query, lat_lng):
     try:
         restaurants = gmaps.places(query=query, location=lat_lng, type='restaurant', min_price=1, open_now=True)
         
+        print("restaurant", restaurants)
+
         recommendations = {}
         
         for restaurant in restaurants['results']:

@@ -2,7 +2,8 @@ import dotenv
 import openai
 import os
 from typing import List, Dict
-from chatbot import *
+from chat.chatbot import *
+from chat.utils import filter_text
 import re
 
 dotenv.load_dotenv()
@@ -29,13 +30,13 @@ def end_conversation(messages_history, model="gpt-4", max_tokens=100):
     Note that in testing, this function works a lot better using GPT-4.
 
     """
-    check_end_message = "If I were going to use the information you've given me about my preferences to query the GoogleMaps API, would I have given you enough information? The necessary information I would need include my location, food preferences, price range, etc. If you do not at least have my location and food preferences, never return TRUE. RETURN TRUE IF I HAVE GIVEN ENOUGH INFORMATION, OTHERWISE RETURN FALSE. SAY NOTHING ELSE. THEN FOLLOW TRUE WITH A NEWLINE WITH THE TEXT TO BE USED FOR THE GOOGLEMAPS SEARCH."
+    check_end_message = "If I were going to use the information you've given me about my preferences to query the GoogleMaps API, would I have given you enough information? The necessary information I would need include my location, food preferences, price range, etc. If you do not at least have my location and food preferences, never return TRUE. RETURN TRUE IF I HAVE GIVEN ENOUGH INFORMATION, OTHERWISE RETURN FALSE. SAY NOTHING ELSE. THEN FOLLOW TRUE WITH A NEWLINE WITH THE SHORT TEXT (under 4 words preferably) TO BE USED FOR THE SIMPLE GOOGLEMAPS SEARCH."
 
     messages_history.append({"role": "user", "content": check_end_message})
 
     output = openai.ChatCompletion.create(
         model=model,
-        messages=messages_history,
+        messages=filter_text(messages_history),
         max_tokens=max_tokens
         )
     output_text = output['choices'][0]['message']['content']

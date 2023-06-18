@@ -20,7 +20,7 @@ def test_chatbot(model="gpt-3.5-turbo", max_tokens=100):
         end, google_maps_search = end_conversation(messages_history, model=model, max_tokens=max_tokens)
     print("Search GoogleMaps API with the following query:", google_maps_search)
 
-def end_conversation(messages_history, location="", model="gpt-4", max_tokens=100):
+def end_conversation(messages_history, location="", model="gpt-4", max_tokens=300):
     """
     Returns end, google_maps_query
 

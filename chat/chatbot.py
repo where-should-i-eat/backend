@@ -7,7 +7,7 @@ from chat.utils import filter_text
 dotenv.load_dotenv()
 openai.api_key = os.environ.get("API_KEY")
 
-def GPT_get_result(text_messages: List[Dict[str, str]], model="gpt-4", max_tokens=100):
+def GPT_get_result(text_messages: List[Dict[str, str]], model="gpt-4", max_tokens=300):
     output = openai.ChatCompletion.create(
         model=model,
         messages=text_messages,

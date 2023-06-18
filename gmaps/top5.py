@@ -46,7 +46,7 @@ def get_top5(messages_history, recom, model="gpt-3.5-turbo", max_tokens=300):
     # TODO reviews
     modified_recs = [recom[r]['name'] + " (" + f"rating: {recom[r]['rating']}" + ", " + f"distance: {recom[r]['distance']}" 
                      + ", " + f"ID: {r}" + ")" for r in recom.keys()]
-    findmsg = f"Choose at most 3 best restaurants from the list provided and give me all 4 of their 27-digit ID: {modified_recs}"
+    findmsg = f"Choose at most 3 best restaurants from the list provided and give me all 4 of their 27-digit ID: {modified_recs}. Tell me in bullet points."
 
     messages_history += [{"role": "user", "content": findmsg}]
 
@@ -82,16 +82,16 @@ def chatbot(messages_history: List[Dict[str, str]], model="gpt-3.5-turbo", max_t
 
     return messages_history
 
-mes_hist = chatbot([])
-mes_hist.append({"role": "user", "content": "we want to get meat close to Berkeley campus"})
-mes_hist = chatbot(mes_hist)
+# mes_hist = chatbot([])
+# mes_hist.append({"role": "user", "content": "we want to get meat close to Berkeley campus"})
+# mes_hist = chatbot(mes_hist)
 
-reco = get_restaurant_recommendations("meat food", (-122.257740, 37.868710))
+# reco = get_restaurant_recommendations("meat food", (-122.257740, 37.868710))
 
 # output_text = get_top5(mes_hist, reco)
 # print(output_text)
 
-def converter(user_location):
+def converter(mes_hist, reco, user_location):
     text, output = get_top5(mes_hist, reco)
     print(text)
     ret = []
@@ -114,13 +114,9 @@ def converter(user_location):
     ret.append({"role": "assistant-map", 
                     "content": {'center': user_location,
                                 'zoom': 12,
-                                'markers': [markers[i] for i in range(len(output) + 1)]
-                                
-                                # [f"{user_location}" + "," + '''title: "This is a Marker"''',
-                                #             f"{output[i][2]}" + "," + str({'title': f"output[i]"} for i in range(len(output)))
-                                # ]
+                                'markers': [markers[i] for i in range(len(markers))]
                                 }
                     })
     return ret
 
-print(converter({'lat': 'lalala', 'lng': 'lololo'}))
+# print(converter({'lat': 'lalala', 'lng': 'lololo'}))

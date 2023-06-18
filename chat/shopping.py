@@ -11,7 +11,7 @@ def shopping_assistant(model="gpt-3.5-turbo", max_tokens=100):
     done = False
     response = input("What do you want to eat?\n")
     messages_history = [
-        {"role": "system", "content": "You are a helpful restaurant assistant. Your goal is to determine types of food that people want. When you are done with your task, say DONE."},
+        {"role": "system", "content": "You are a helpful assistant who will suggest a restaurant. Your goal is to determine types of food that people want. When you are done with your task, say DONE."},
         {"role": "assistant", "content": "What do you want to buy?"}]
     while not done:
         messages_history += [{"role": "user", "content": response}]

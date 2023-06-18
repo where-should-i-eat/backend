@@ -4,7 +4,7 @@ import os
 
 import re
 # from chat.chatbot import chatbot
-from gmaps.connect_gmap import get_restaurant_recommendations, add_to_coordinate, get_name
+from connect_gmap import get_restaurant_recommendations, add_to_coordinate, get_name
 from typing import List, Dict
 
 dotenv.load_dotenv()

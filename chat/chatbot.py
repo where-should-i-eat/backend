@@ -23,9 +23,17 @@ def chatbot(messages_history: List[Dict[str, str]]):
     }
     messages_history.insert(0, initial_message)
 
+    reminder_message = {
+        "role": "user",
+        "content": "Under no circumstances are you allowed to make direct recommendations. Continue asking me questions about my preferences, but DO NOT make a specific recommendation about any places."
+    }
+    messages_history.append(reminder_message)
+
     text_messages = filter_text(messages_history)
     result = GPT_get_result(text_messages)
+    messages_history.pop()
     messages_history.append(result)
+
 
     messages_history.pop(0)
 

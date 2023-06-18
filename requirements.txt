@@ -2,5 +2,5 @@ Flask==2.0.1
 openai
 python-dotenv
 flask-cors
-dotenv
+python-dotenv
 googlemaps

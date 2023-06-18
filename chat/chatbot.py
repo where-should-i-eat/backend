@@ -16,12 +16,18 @@ def GPT_get_result(text_messages: List[Dict[str, str]], model="gpt-4", max_token
     output_text = output['choices'][0]['message']['content']
     return {"role": "assistant", "content": output_text}
 
-def chatbot(messages_history: List[Dict[str, str]]):
+def chatbot(messages_history: List[Dict[str, str]], location=""):
     initial_message = {
         "role": "user",
         "content": "You are a helpful assistant designed to help me choose a restaurant. You should ask a series of questions to learn my preferences so that you can suggest a tailored food place recommendation based on my preferences. Go ahead and introduce yourself as a helpful AI assistant designed to help me choose a restaurant and get started with asking the first question to determine my preferences.",
     }
     messages_history.insert(0, initial_message)
+
+    location_message = {
+        "role": "user",
+        "content": f"This is my coordinate: {location}. Use this to help recommend restaurants near me. DO NOT REMIND ME THAT I TOLD YOU THIS."
+    }
+    messages_history.insert(1, location_message)
 
     reminder_message = {
         "role": "assistant",
@@ -35,7 +41,9 @@ def chatbot(messages_history: List[Dict[str, str]]):
     messages_history.pop(-2) # get rid of reminder_message
     messages_history.append(result)
 
+    messages_history.pop(1) # get rid of location_message
     messages_history.pop(0) # get rid of initial_message
+
 
     # print(messages_history)
     return messages_history

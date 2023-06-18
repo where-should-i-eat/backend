@@ -18,7 +18,7 @@ def chat():
     print(data['location'])
     location = data['location']
     messages_history = data['messages']
-    end, google_maps_query = end_conversation(messages_history)
+    end, google_maps_query = end_conversation(messages_history, location)
     if end:
         print("google_maps_query", google_maps_query)
         recommendations = get_restaurant_recommendations(google_maps_query, location) # is location the right format?
@@ -29,5 +29,5 @@ def chat():
         # append top3 to messages_history
         messages_history += top3
     else:
-        messages_history = chatbot(messages_history)
+        messages_history = chatbot(messages_history, location=location)
     return jsonify({'messages': messages_history})

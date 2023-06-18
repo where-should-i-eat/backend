@@ -47,17 +47,31 @@ def get_top5(messages_history, recom, model="gpt-3.5-turbo", max_tokens=300):
     # TODO reviews
     modified_recs = [recom[r]['name'] + " (" + f"rating: {recom[r]['rating']}" + ", " + f"distance: {recom[r]['distance']}" 
                      + ", " + f"ID: {r}" + ")" for r in recom.keys()]
-    findmsg = f"Choose at most 3 best restaurants from the list provided and give me all of their 27-digit ID: {modified_recs}. Tell me in bullet points."
+    findmsg = f"Choose AT MOST 3 best restaurants from the list provided and give me all of their 27-digit ID: {modified_recs}."
 
     messages_history += [{"role": "user", "content": findmsg}]
+    ridmsg = "Give me a list of the NAME of each of the restaurant in bullet points"
 
     output = openai.ChatCompletion.create(
         model=model,
         messages=filter_text(messages_history),
         max_tokens=max_tokens
         )
+        
     output_text1 = output['choices'][0]['message']['content']
     messages_history += [{"role": "assistant", "content": output_text1}]
+
+    messages_history += [{"role": "user", "content": ridmsg}]
+    output = openai.ChatCompletion.create(
+        model=model,
+        messages=filter_text(messages_history),
+        max_tokens=max_tokens
+        )
+    output_text2 = output['choices'][0]['message']['content']
+    messages_history += [{"role": "assistant", "content": output_text2}]
+
+    messages_history.pop(-2)
+    messages_history.pop(-2)
     messages_history.pop(-2)
 
     return output_text1, extract_coord(recom, output_text1)
@@ -97,8 +111,7 @@ def converter(mes_hist, reco, user_location):
     print(text)
     ret = []
     for i in range(len(output)):
-        ret.append({"role": "assistant", "content": output[i][0]}) #name
-        ret.append({"role": "assistant", "content": output[i][1]}) #address
+        ret.append({"role": "assistant", "content": output[i][0] + " (" + output[i][1] + ")"}) #name, address
         if len(output[i][3]) == 0:
             continue
         elif len(output[i][3]) == 1:
@@ -110,7 +123,7 @@ def converter(mes_hist, reco, user_location):
     markers = {}
     markers[len(output)] = {'lat': user_location['lat'], 'lng': user_location['lng'], 'title': "Your Location"}
     for i in range(len(output)):
-        markers[i] = {'lat': output[i][2]['lat'], 'lng': output[i][2]['lat'], 'title': output[i][0]}
+        markers[i] = {'lat': output[i][2]['lat'], 'lng': output[i][2]['lng'], 'title': output[i][0]}
 
     ret.append({"role": "assistant-map", 
                     "content": {'center': user_location,

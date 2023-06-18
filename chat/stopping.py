@@ -20,7 +20,7 @@ def test_chatbot(model="gpt-3.5-turbo", max_tokens=100):
         end, google_maps_search = end_conversation(messages_history, model=model, max_tokens=max_tokens)
     print("Search GoogleMaps API with the following query:", google_maps_search)
 
-def end_conversation(messages_history, model="gpt-4", max_tokens=100):
+def end_conversation(messages_history, location="", model="gpt-4", max_tokens=100):
     """
     Returns end, google_maps_query
 
@@ -30,7 +30,14 @@ def end_conversation(messages_history, model="gpt-4", max_tokens=100):
     Note that in testing, this function works a lot better using GPT-4.
 
     """
-    check_end_message = "If I were going to use the information you've given me about my preferences to query the GoogleMaps API, would I have given you enough information? The necessary information I would need include my location, food preferences, price range, etc. If you do not at least have my location and food preferences, never return TRUE. RETURN TRUE IF I HAVE GIVEN ENOUGH INFORMATION, OTHERWISE RETURN FALSE. SAY NOTHING ELSE. THEN FOLLOW TRUE WITH A NEWLINE WITH THE SHORT TEXT (under 4 words preferably) TO BE USED FOR THE SIMPLE GOOGLEMAPS SEARCH."
+
+    location_message = {
+        "role": "user",
+        "content": f"These are the coordinates of my current location: {location}. Use this to help recommend restaurants near me. DO NOT REMIND ME THAT I TOLD YOU THIS."
+    }
+    messages_history.insert(1, location_message)
+
+    check_end_message = "If I were going to use the information you've given me about my preferences to query the GoogleMaps API, would I have given you enough information? The necessary information I would need before suggesting a restaurant are my location, food preferences, price range, and other crucial details. If you do not at least have my location and food preferences, never return TRUE. RETURN TRUE IF I HAVE GIVEN ENOUGH INFORMATION, OTHERWISE RETURN FALSE. SAY NOTHING ELSE. IF YOU SAY TRUE, THEN AFTER THE WORD TRUE, IN A NEWLINE, PROVIDE A SHORT QUERY TEXT (under 4 words preferably) TO BE INPUTTED FOR A SIMPLE GOOGLEMAPS SEARCH."
 
     messages_history.append({"role": "user", "content": check_end_message})
 
@@ -41,6 +48,8 @@ def end_conversation(messages_history, model="gpt-4", max_tokens=100):
         )
     output_text = output['choices'][0]['message']['content']
     messages_history.pop()
+
+    messages_history.pop(1) # get rid of location_message
 
     end = "true" in output_text.lower()
 

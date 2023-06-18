@@ -72,7 +72,9 @@ def get_restaurant_reviews(place_id):
     if response.status_code == 200:
         result = response.json()
         restaurant_name = result["result"]["name"]
-        reviews = result["result"]["reviews"]
+        reviews = []
+        if "reviews" in result["result"].keys():
+            reviews = result["result"]["reviews"]
 
         for review in reviews:
             author_name = review["author_name"]

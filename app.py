@@ -12,6 +12,7 @@ def home():
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.json
+    print(data['location'])
     messages_history = data['messages']
     messages_history = chatbot(messages_history)
     return jsonify({'messages': messages_history})

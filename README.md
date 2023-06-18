@@ -1,4 +1,14 @@
 # Where Should I Eat? - Backend
+Hungry, but can't figure out a place nearby to eat? Craving something sweet? Spicy or mild? Pizza or sushi?  
+Use the [WhereShouldIEat Chatbot](https://wheretoeat.vercel.app/) to help you decide!
+
+## [Demo Video](https://youtu.be/Uac_E676KiQ)
+
+## Collaborators
+- Ryan Campbell
+- Harry Lai
+- Shulu Li
+- Rishi Khare
 
 ## Factored Cognition Chatbot
 

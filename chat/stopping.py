@@ -2,22 +2,22 @@ import dotenv
 import openai
 import os
 from typing import List, Dict
-from chatbot import *
+# from chatbot import *
 import re
 
 dotenv.load_dotenv()
 openai.api_key = os.environ.get("API_KEY")
 
-def test_chatbot(model="gpt-3.5-turbo", max_tokens=100):
-    end = False
-    messages_history = chatbot([])
-    while not end:
-        print(messages_history[-1]["content"])
-        user_input = input()
-        messages_history.append({"role": "user", "content": user_input})
-        messages_history = chatbot(messages_history)
-        end, google_maps_search = end_conversation(messages_history, model=model, max_tokens=max_tokens)
-    print("Search GoogleMaps API with the following query:", google_maps_search)
+# def test_chatbot(model="gpt-3.5-turbo", max_tokens=100):
+#     end = False
+#     messages_history = chatbot([])
+#     while not end:
+#         print(messages_history[-1]["content"])
+#         user_input = input()
+#         messages_history.append({"role": "user", "content": user_input})
+#         messages_history = chatbot(messages_history)
+#         end, google_maps_search = end_conversation(messages_history, model=model, max_tokens=max_tokens)
+#     print("Search GoogleMaps API with the following query:", google_maps_search)
 
 def end_conversation(messages_history, model="gpt-4", max_tokens=100):
     """

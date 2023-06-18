@@ -22,6 +22,7 @@ def chat():
     if end:
         recommendations = get_restaurant_recommendations(google_maps_query, location) # is location the right format?
         top3 = get_top5(messages_history, recommendations)
+        print(top3)
         # top3 will return a list of the chosen recommendations
         return jsonify(...) # I'm not sure exactly what format this should b in
     else:

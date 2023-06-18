@@ -18,13 +18,7 @@ gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 # print(gmaps.distance_matrix((37.8719, -122.2585), (39, -122.2585), units='metric')['rows'][0]['elements'][0]['distance']['value'])
 # exit()
 
-# def get_top5_review(r):
-#     sorted_reviews = sorted(r, key=lambda x: x['rating'], reverse=True)
-#     # Select the top 5 reviews
-#     if len(sorted_reviews < 5):
-#         return sorted_reviews
-#     else:
-#         return  sorted_reviews[:5]
+
 
 def get_restaurant_recommendations(query, lat_lng):
     try:
@@ -50,7 +44,7 @@ def get_restaurant_recommendations(query, lat_lng):
                 distance = distancedic['rows'][0]['elements'][0]['distance']['text'] #the distance is in km
             
             if rating >= min_rating:
-                recommendations[name] = {'name': name, 'address': address, 'rating': rating, 
+                recommendations[place_id] = {'name': name, 'address': address, 'rating': rating, 
                                         'website': website, 'phone number': phone_number, 
                                         'place_id': place_id, 'reviews': reviews[:3], 'photos': photos,
                                         'coordinate': coordinate, 'distance': distance}

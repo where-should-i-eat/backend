@@ -4,7 +4,7 @@ import os
 
 import re
 # from chat.chatbot import chatbot
-from connect_gmap import get_restaurant_recommendations, add_to_coordinate, get_name
+from connect_gmap import get_restaurant_recommendations, add_to_coordinate, get_placeid, get_restaurant_photos
 from typing import List, Dict
 
 dotenv.load_dotenv()
@@ -22,9 +22,10 @@ def extract_coordinate(recom, text):
     matches = re.findall(name_pattern, text)
     for match in matches:
         names.append(match)
-    # return [[add_to_coordinate(a), a, get_name(add_to_coordinate(a))] for a in addresses]
+    # return [[add_to_coordinate(a), a, get_restaurant_photos(get_placeid(add_to_coordinate(a)))] for a in addresses]
+    # # return [[add_to_coordinate(a), a, get_name(add_to_coordinate(a))] for a in addresses]
 
-    return [[add_to_coordinate(addresses[idx]), addresses[idx], names[idx]] for idx in list(range(min(len(names), len(addresses))))]
+    return [[add_to_coordinate(addresses[idx]), addresses[idx], names[idx], recom[names[idx]]['photos']] for idx in list(range(min(len(names), len(addresses))))]
 
 def extract_text_between_at_signs(text):
     pattern = r'@([^@]+)@'

@@ -50,7 +50,7 @@ def get_restaurant_recommendations(query, lat_lng):
                 distance = distancedic['rows'][0]['elements'][0]['distance']['text'] #the distance is in km
             
             if rating >= min_rating:
-                recommendations[place_id] = {'name': name, 'address': address, 'rating': rating, 
+                recommendations[name] = {'name': name, 'address': address, 'rating': rating, 
                                         'website': website, 'phone number': phone_number, 
                                         'place_id': place_id, 'reviews': reviews[:3], 'photos': photos,
                                         'coordinate': coordinate, 'distance': distance}
@@ -162,19 +162,14 @@ def get_restaurant_name(address):
     
     return None  # No restaurant found
 
-def get_name(coord):
+def get_placeid(coord):
     lat, lng = coord['lat'], coord['lng']
     url1 = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={GMAPS_API_KEY}'
     response1 = requests.get(url1)
     data1 = response1.json()
     placeid = data1['results'][0]['place_id']
-    url2 = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={placeid}&key={GMAPS_API_KEY}'
-    response2 = requests.get(url2)
-    data2 = response2.json()
-    if data2['status'] == 'OK':
-        if 'result' in data2 and 'name' in data2['result']:
-            return data2['result']['name']
-    return None
+    
+    return placeid
 
 
 

@@ -13,7 +13,7 @@ gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 
 # print(gmaps.reverse_geocode((37.8719, -122.2585))[0]['address_components'])
 # print(gmaps.reverse_geocode((37.8719, -122.2585))[0]['formatted_address'])
-geocode_result = gmaps.geocode(address="2580 Bancroft Way")
+# geocode_result = gmaps.geocode(address="2580 Bancroft Way")
 # print(geocode_result[0]['geometry']['location'])
 # print(gmaps.distance_matrix((37.8719, -122.2585), (39, -122.2585), units='metric')['rows'][0]['elements'][0]['distance']['value'])
 # exit()
@@ -30,7 +30,7 @@ def get_restaurant_recommendations(query, lat_lng):
     try:
         restaurants = gmaps.places(query=query, location=lat_lng, type='restaurant', min_price=1, open_now=True)
         
-        recommendations = []
+        recommendations = {}
         
         for restaurant in restaurants['results']:
             name = restaurant['name']
@@ -44,16 +44,16 @@ def get_restaurant_recommendations(query, lat_lng):
             photos = get_restaurant_photos(place_id) # a list of url's
             coordinate = gmaps.geocode(address=address)[0]['geometry']['location']
             distancedic = gmaps.distance_matrix(coordinate, lat_lng, units='metric')
-            print(distancedic['rows'][0]['elements'][0])
+            # print(distancedic['rows'][0]['elements'][0])
             distance = 'Unknown'
             if distancedic['rows'][0]['elements'][0]['status'] == 'OK':
                 distance = distancedic['rows'][0]['elements'][0]['distance']['text'] #the distance is in km
             
             if rating >= min_rating:
-                recommendations.append({'name': name, 'address': address, 'rating': rating, 
+                recommendations[place_id] = {'name': name, 'address': address, 'rating': rating, 
                                         'website': website, 'phone number': phone_number, 
                                         'place_id': place_id, 'reviews': reviews[:3], 'photos': photos,
-                                        'coordinate': coordinate, 'distance': distance})
+                                        'coordinate': coordinate, 'distance': distance}
         
         return recommendations
     
@@ -61,25 +61,11 @@ def get_restaurant_recommendations(query, lat_lng):
         print(f"Error occurred: {e}")
 
 # Provide the place, cuisine, and minimum rating for the recommendations
-place = 'Berkeley'
-cuisine = 'Italian'
+# place = 'Berkeley'
+# cuisine = 'Italian'
 min_rating = 4.0
-query = "Give me some Italian food"
+# query = "Give me some Italian food"
 
-
-# def get_location():
-#     url = f"https://www.googleapis.com/geolocation/v1/geolocate?key={GMAPS_API_KEY}"
-#     response = requests.post(url)
-
-#     if response.status_code == 200:
-#         result = response.json()
-#         location = result["location"]
-#         latitude = location["lat"]
-#         longitude = location["lng"]
-#         accuracy = result["accuracy"]
-#     else:
-#         print("Failed to get location")
-#     return result
 
 def get_restaurant_reviews(place_id):
     url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,rating,reviews&key={GMAPS_API_KEY}"
@@ -125,7 +111,73 @@ def add_to_coordinate(add):
     geocode_result = gmaps.geocode(address=add)
     return geocode_result[0]['geometry']['location'] # a dictionary of lat and lng
 
+def coord_to_name(coord):
+    lat, lng = coord['lat'], coord['lng']
+    url = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={GMAPS_API_KEY}'
+    response = requests.get(url)
+    data = response.json()
+    if data['status'] == 'OK':
+        if len(data['results']) > 0:
+            result = data['results'][0]
+            print(result.keys())
+            return result['name']
+    return None
 
-lat_lng = (37.8719, -122.2585)
-query = "find me some chinese place near campus"
-get_restaurant_recommendations(query, lat_lng)
+def get_name_from_address(address):
+    url = f'https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={GMAPS_API_KEY}'
+    response = requests.get(url)
+    data = response.json()
+    if data['status'] == 'OK':
+        if len(data['results']) > 0:
+            result = data['results'][0]
+            
+            print(result['address_components'])
+            for component in result['address_components']:
+                if 'restaurant' in component['types']:
+                    return component['long_name']
+            return None
+    return None
+
+
+def get_establishment_name(coord):
+    latitude, longitude = coord
+    gmaps = googlemaps.Client(key=GMAPS_API_KEY)
+    reverse_geocode_result = gmaps.reverse_geocode((latitude, longitude))
+    
+    for result in reverse_geocode_result:
+        for component in result['address_components']:
+            if 'establishment' in component['types']:
+                return component['long_name']
+    return None  # No establishment found
+
+def get_restaurant_name(address):
+    gmaps = googlemaps.Client(key=GMAPS_API_KEY)
+    geocode_result = gmaps.geocode(address)
+    
+    if geocode_result:
+        first_result = geocode_result[0]
+        for component in first_result['address_components']:
+            if 'restaurant' in component['types']:
+                return first_result['name']
+    
+    return None  # No restaurant found
+
+def get_name(coord):
+    lat, lng = coord['lat'], coord['lng']
+    url1 = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={GMAPS_API_KEY}'
+    response1 = requests.get(url1)
+    data1 = response1.json()
+    placeid = data1['results'][0]['place_id']
+    url2 = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={placeid}&key={GMAPS_API_KEY}'
+    response2 = requests.get(url2)
+    data2 = response2.json()
+    if data2['status'] == 'OK':
+        if 'result' in data2 and 'name' in data2['result']:
+            return data2['result']['name']
+    return None
+
+
+
+# lat_lng = (37.8719, -122.2585)
+# query = "find me some chinese place near campus"
+# get_restaurant_recommendations(query, lat_lng)

@@ -21,7 +21,7 @@ def test_chatbot(model="gpt-3.5-turbo", max_tokens=100):
 
 def end_conversation(messages_history, model="gpt-4", max_tokens=100):
     """
-    Returns end, google_maps_search
+    Returns end, google_maps_query
 
     end = True iff the conversation has sufficient information to create a GoogleMaps API query and pick desired restaurants.
     google_maps_search = '' if end is False, otherwise it is the query given by OpenAI
@@ -44,12 +44,11 @@ def end_conversation(messages_history, model="gpt-4", max_tokens=100):
     end = "true" in output_text.lower()
 
     match = re.search(r'\n(.+)', output_text)
-    google_maps_search = ''
+    google_maps_query = ''
 
     if match:
-        google_maps_search = match.group(1)
+        google_maps_query = match.group(1)
 
-    return end, google_maps_search
+    return end, google_maps_query
 
-
-test_chatbot(model="gpt-4")
+# test_chatbot(model="gpt-4")

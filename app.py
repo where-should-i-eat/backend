@@ -19,6 +19,7 @@ def chat():
     location = data['location']
     messages_history = data['messages']
     cnt = 0
+    end = False
     for message in messages_history:
         if message["role"] == "user":
             cnt += 1

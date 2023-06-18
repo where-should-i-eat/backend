@@ -2,7 +2,7 @@ import dotenv
 import openai
 import os
 from typing import List, Dict
-from utils import filter_text
+from chat.utils import filter_text
 
 dotenv.load_dotenv()
 openai.api_key = os.environ.get("API_KEY")

@@ -2,6 +2,8 @@
 Hungry, but can't figure out a place nearby to eat? Craving something sweet? Spicy or mild? Pizza or sushi?  
 Use the [WhereShouldIEat Chatbot](https://wheretoeat.vercel.app/) to help you decide!
 
+Submission for CalHacks AI LLM Hackathon (Summer 2023) - Achieved top 30% (ranking) of submissions
+
 ## [Demo Video](https://youtu.be/Uac_E676KiQ)
 
 ## Collaborators

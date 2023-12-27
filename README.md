@@ -13,7 +13,7 @@ Use the [WhereShouldIEat Chatbot](https://wheretoeat.vercel.app/) to help you de
 ## Factored Cognition Chatbot
 
 - Ask a series of questions about proximity/location, occasion, price, etc.
-- From responses, output one restaurant
+- From user responses to questions, output a recommended restaurant
 
 ## App workflow:
 
